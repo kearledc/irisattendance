@@ -1,9 +1,10 @@
 import React, { useState, useContext } from "react";
 // Semantic UI
-import { Button, Form } from "semantic-ui-react";
+import { Button, Form, Select } from "semantic-ui-react";
 // GraphQL
 import gql from "graphql-tag";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import { registerStudent } from "../Utilities/GraphqlMutation";
 // Hooks
 import { useForm } from "../Utilities/Hooks";
 // Auth
@@ -19,13 +20,11 @@ const RegisterStudent = props => {
 	});
 
 	const [addStudent, { loading }] = useMutation(registerStudent, {
-		update(_, { data: { registerStudent: studentData } }) {
-			context.login(studentData);
+		update(_, { data: { registerStudent: adminData } }) {
 			props.history.push("./");
 		},
 		onError(errs) {
-			console.log(errs);
-			// setErrors(err.graphQLErrors[0].extension.exception.errs);
+			setErrors(errs.graphQLErrors[0].extensions.exception.errs);
 		},
 		variables: values
 	});
@@ -60,6 +59,7 @@ const RegisterStudent = props => {
 					errs={errs.lastName ? true : false}
 					onChange={onChange}
 				/>
+
 				<Button type="submit">Register Student</Button>
 			</Form>
 
@@ -75,30 +75,5 @@ const RegisterStudent = props => {
 		</div>
 	);
 };
-
-const registerStudent = gql`
-	mutation registerStudent(
-		$firstName: String!
-		$lastName: String!
-		$sectionName: String!
-	) {
-		registerStudent(
-			registerStudent: {
-				firstName: $firstName
-				lastName: $lastName
-				sectionName: $sectionName
-			}
-		) {
-			firstName
-			lastName
-			sectionName {
-				name
-			}
-			absences
-			id
-			createdAt
-		}
-	}
-`;
 
 export default RegisterStudent;

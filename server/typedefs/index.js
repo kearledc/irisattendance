@@ -23,20 +23,15 @@ module.exports = gql`
 		firstName: String!
 		lastName: String!
 		absences: Int!
-		sectionName: [SectionType]!
+		sectionName: String!
 		createdAt: String
 	}
 	input RegisterStudent {
 		firstName: String
 		lastName: String
 		absences: Int
-		sectionName: [StudentSection]
+		sectionName: String
 		addedBy: String
-	}
-
-	input StudentSection {
-		name: String!
-		createdAt: String
 	}
 
 	input RegisterAdmin {

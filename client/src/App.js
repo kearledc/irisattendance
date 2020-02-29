@@ -7,6 +7,8 @@ import { Container } from "semantic-ui-react";
 import Home from "./Pages/Home";
 import RegisterStudent from "./Pages/RegisterStudent";
 import Login from "./Pages/Login";
+import SectionPage from "./Pages/SectionPage";
+
 // Components
 import MenuBar from "./Components/MenuBar";
 // Utilities
@@ -22,6 +24,7 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route path="/register" component={RegisterStudent} />
           <AuthRoute path="/login" component={Login} />
+          <Route path="/sections/:id" component={SectionPage} />
         </Container>
       </Router>
     </AuthProvider>

@@ -5,13 +5,7 @@ const studentSchema = new Schema(
 		firstName: String,
 		lastName: String,
 		absences: Number,
-
-		sectionName: [
-			{
-				name: String,
-				createdAt: String
-			}
-		],
+		sectionName: String,
 		createdAt: String,
 		addedBy: {
 			type: Schema.Types.ObjectId,
