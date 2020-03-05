@@ -49,13 +49,16 @@ module.exports.validateCreateSection = name => {
 	};
 };
 
-module.exports.validateRegisterStudent = (firstName, lastName) => {
+module.exports.validateRegisterStudent = (firstName, lastName, sectionName) => {
 	const errs = {};
 	if (firstName.trim() === "") {
 		errs.firstName = "First Name must not be Empty";
 	}
 	if (lastName.trim() === "") {
 		errs.lastName = "Last Name must not be Empty";
+	}
+	if (sectionName.trim() === "" || sectionName === "Choose A Section..") {
+		errs.sectionName = "Please Choose a Section";
 	}
 	return {
 		errs,

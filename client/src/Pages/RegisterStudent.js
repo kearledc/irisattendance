@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
 // Semantic UI
-import { Button, Form, Select } from "semantic-ui-react";
+import { Button, Form } from "semantic-ui-react";
 // GraphQL
-import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { registerStudent } from "../Utilities/GraphqlMutation";
+import { getSectionsQuery } from "../Utilities/GraphqlQueries";
 // Hooks
 import { useForm } from "../Utilities/Hooks";
 // Auth
@@ -13,18 +13,25 @@ import { AuthContext } from "../Utilities/Auth";
 const RegisterStudent = props => {
 	const [errs, setErrors] = useState({});
 	const context = useContext(AuthContext);
+	const { data } = useQuery(getSectionsQuery);
+	const sectionList = data ? data.getSections : [];
 
 	const { onChange, onSubmitForm, values } = useForm(registry, {
 		firstName: "",
-		lastName: ""
+		lastName: "",
+		sectionName: ""
+	});
+
+	const sectionOption = sectionList.map(section => {
+		return <option key={section.id}>{section.name}</option>;
 	});
 
 	const [addStudent, { loading }] = useMutation(registerStudent, {
-		update(_, { data: { registerStudent: adminData } }) {
+		update(_, { data: { registerStudent: studentData } }) {
 			props.history.push("./");
 		},
-		onError(errs) {
-			setErrors(errs.graphQLErrors[0].extensions.exception.errs);
+		onError(err) {
+			setErrors(err.graphQLErrors[0].extensions.exception.errs);
 		},
 		variables: values
 	});
@@ -35,32 +42,39 @@ const RegisterStudent = props => {
 
 	return (
 		<div>
-			<Form
-				onSubmit={onSubmitForm}
-				noValidate
-				method="POST"
-				className={loading ? "loading" : ""}
-			>
-				<h1>Enroll A Student</h1>
+			<Form onSubmit={onSubmitForm}>
+				<h1>Register A Student</h1>
 				<Form.Input
 					label="First Name"
-					placeholder="Enter First Name"
+					placeholder="Enter a First Name"
 					name="firstName"
 					value={values.firstName}
-					errs={errs.firstName ? true : false}
-					onChange={onChange}
-					type="text"
-				/>
-				<Form.Input
-					label="Last Name"
-					placeholder="Enter Last Name"
-					name="lastName"
-					value={values.lastName}
-					errs={errs.lastName ? true : false}
+					error={errs.firstName ? true : false}
 					onChange={onChange}
 				/>
 
-				<Button type="submit">Register Student</Button>
+				<Form.Input
+					label="Last Name"
+					placeholder="Enter a Last Name"
+					name="lastName"
+					value={values.lastName}
+					error={errs.lastName ? true : false}
+					onChange={onChange}
+				/>
+
+				<label>Section Name</label>
+				<select
+					id="sectionSelect"
+					name="sectionName"
+					value={values.sectionName}
+					onChange={onChange}
+				>
+					<option defaultValue>Choose A Section..</option>
+					{sectionOption}
+				</select>
+				<Button type="submit" primary>
+					Register Student
+				</Button>
 			</Form>
 
 			{Object.keys(errs).length > 0 && (

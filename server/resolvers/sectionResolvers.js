@@ -15,6 +15,16 @@ module.exports = {
 			} catch (err) {
 				throw new Error(err);
 			}
+		},
+		async getSection(_, { sectionId }) {
+			try {
+				const section = await Section.findById(sectionId);
+				if (section) {
+					return section;
+				}
+			} catch (err) {
+				throw new Error(err);
+			}
 		}
 	},
 	Mutation: {
@@ -52,6 +62,19 @@ module.exports = {
 				if (section) {
 					await section.delete();
 					return "Section Deleted";
+				}
+			} catch (err) {
+				throw new Error(err);
+			}
+		}
+	},
+
+	SectionType: {
+		async students(_, args) {
+			try {
+				const student = await Student.find({ sectionName: _.name });
+				if (student) {
+					return student;
 				}
 			} catch (err) {
 				throw new Error(err);

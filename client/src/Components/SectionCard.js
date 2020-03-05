@@ -1,11 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 // Semantic UI
-import { Card, Image } from "semantic-ui-react";
+import { Card, Image, Button } from "semantic-ui-react";
 // moment
 import moment from "moment";
 
 const SectionCard = ({ section: { id, name, createdAt } }) => {
+	const sectionButtonClick = () => console.log("Hello");
+
 	return (
 		<Card fluid className="sectioncard">
 			<Card.Content>
@@ -19,6 +21,7 @@ const SectionCard = ({ section: { id, name, createdAt } }) => {
 				</Card.Header>
 				<Card.Meta>{moment(createdAt).fromNow(true)}</Card.Meta>
 				<Card.Description>Section</Card.Description>
+				<Button onClick={sectionButtonClick}>Hello</Button>
 			</Card.Content>
 		</Card>
 	);

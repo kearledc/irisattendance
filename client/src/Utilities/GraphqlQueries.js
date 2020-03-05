@@ -18,6 +18,14 @@ const getSectionsQuery = gql`
 			id
 			name
 			createdAt
+			students {
+				firstName
+				lastName
+				sectionName
+				absences
+				id
+				createdAt
+			}
 		}
 	}
 `;

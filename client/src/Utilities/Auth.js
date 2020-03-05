@@ -9,7 +9,7 @@ const initialState = {
 if (localStorage.getItem("jwtToken")) {
 	const decodeToken = jwtDecode(localStorage.getItem("jwtToken"));
 	if (decodeToken.exp * 1000 < Date.now()) {
-		localStorage.removeItem("jwtToken");
+		localStorage.removeItem("jwtToken"); // Auto Log Out
 	} else {
 		initialState.admin = decodeToken;
 	}

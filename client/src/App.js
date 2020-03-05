@@ -8,6 +8,7 @@ import Home from "./Pages/Home";
 import RegisterStudent from "./Pages/RegisterStudent";
 import Login from "./Pages/Login";
 import SectionPage from "./Pages/SectionPage";
+import CreateSection from "./Pages/CreateSection";
 
 // Components
 import MenuBar from "./Components/MenuBar";
@@ -23,8 +24,9 @@ function App() {
           <MenuBar />
           <Route exact path="/" component={Home} />
           <Route path="/register" component={RegisterStudent} />
-          <AuthRoute path="/login" component={Login} />
-          <Route path="/sections/:id" component={SectionPage} />
+          <Route path="/createsection" component={CreateSection} />
+          <AuthRoute exact path="/login" component={Login} />
+          <Route exact path="/sections/:id" component={SectionPage} />
         </Container>
       </Router>
     </AuthProvider>

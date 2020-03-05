@@ -25,7 +25,8 @@ module.exports = {
 			const admin = checkAuth(context);
 			const { valid, errs } = validateRegisterStudent(
 				firstName,
-				lastName
+				lastName,
+				sectionName
 			);
 			if (!valid) {
 				throw new UserInputError("Errors", { errs });
@@ -35,7 +36,8 @@ module.exports = {
 				throw new UserInputError("Student already Registered", {
 					errs: {
 						firstName: "Student Already Registered",
-						lastName: "Student Already Registered"
+						lastName: "Student Already Registered",
+						sectionName: "Student Already Registered"
 					}
 				});
 			}
@@ -68,7 +70,7 @@ module.exports = {
 				const student = await Student.findById(studentId);
 				if (student) {
 					await student.delete();
-					return "Student Dropped";
+					return true;
 				}
 			} catch (err) {
 				throw new Error(err);

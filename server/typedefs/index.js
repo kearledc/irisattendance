@@ -46,6 +46,7 @@ module.exports = gql`
 		getAdmins: [AdminType]
 		getSections: [SectionType]
 		getStudents: [StudentType]
+		getSection(sectionId: String): SectionType
 	}
 
 	type Mutation {
@@ -57,7 +58,7 @@ module.exports = gql`
 			studentId: ID
 			updateStudent: RegisterStudent
 		): StudentType!
-		dropStudent(studentId: ID): String!
+		dropStudent(studentId: String): Boolean
 
 		createSection(name: String): SectionType!
 		deleteSection(sectionId: ID): String!

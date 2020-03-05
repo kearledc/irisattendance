@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 // Semantic UI
 import { Button, Form } from "semantic-ui-react";
 // GraphQL
-import gql from "graphql-tag";
+import { logInAdmin } from "../Utilities/GraphqlMutation";
 import { useMutation } from "@apollo/react-hooks";
 // Hooks
 import { useForm } from "../Utilities/Hooks";
@@ -20,7 +20,7 @@ const Login = props => {
 	const [loggingIn, { loading }] = useMutation(logInAdmin, {
 		update(_, { data: { logInAdmin: adminData } }) {
 			context.logInAdmin(adminData);
-			props.history.push("/");
+			props.history.push("./");
 		},
 		onError(err) {
 			setErrors(err.graphQLErrors[0].extensions.exception.errs);
@@ -46,7 +46,7 @@ const Login = props => {
 					placeholder="Username.."
 					name="username"
 					value={values.username}
-					errs={errs.username ? true : false}
+					error={errs.username ? true : false}
 					onChange={onChange}
 					type="text"
 				/>
@@ -56,7 +56,7 @@ const Login = props => {
 					placeholder="Password.."
 					name="password"
 					value={values.password}
-					errs={errs.password ? true : false}
+					error={errs.password ? true : false}
 					onChange={onChange}
 					type="password"
 				/>
@@ -77,19 +77,5 @@ const Login = props => {
 		</div>
 	);
 };
-
-const logInAdmin = gql`
-	mutation logInAdmin($username: String!, $password: String!) {
-		logInAdmin(username: $username, password: $password) {
-			id
-			username
-			password
-			firstName
-			lastName
-			token
-			createdAt
-		}
-	}
-`;
 
 export default Login;

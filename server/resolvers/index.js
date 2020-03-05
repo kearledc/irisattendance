@@ -12,5 +12,8 @@ module.exports = {
 		...adminResolvers.Mutation,
 		...sectionResolvers.Mutation,
 		...studentResolvers.Mutation
+	},
+	SectionType: {
+		...sectionResolvers.SectionType
 	}
 };

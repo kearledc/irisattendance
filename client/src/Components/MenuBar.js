@@ -11,25 +11,38 @@ const MenuBar = () => {
 	const handleItemClick = (e, { name }) => setActive(name);
 	const menuBar = admin ? (
 		<Menu pointing secondary size="massive" color="teal">
-			<Menu.Item name={`Hello ${admin.username}`} as={Link} to="/" />
+			<Menu.Item
+				name="Iris Attendance"
+				as={Link}
+				to="/"
+				active={activeItem === "Iris Attendance"}
+			/>
 
 			<Menu.Menu position="right">
 				<Menu.Item
+					name="Create A Section"
+					active={activeItem === "Create A Section"}
+					onClick={handleItemClick}
+					as={Link}
+					to="/createsection"
+				/>
+
+				<Menu.Item
 					name="Enroll a Student"
-					active={activeItem === "register"}
+					active={activeItem === "Enroll a Student"}
 					onClick={handleItemClick}
 					as={Link}
 					to="/register"
 				/>
 
-				<Menu.Item name="logOut" onClick={logOut} />
+				<Menu.Item name="logOut" onClick={logOut} as={Link} to="/" />
 			</Menu.Menu>
 		</Menu>
 	) : (
 		<Menu pointing secondary size="massive" color="teal">
 			<Menu.Item
 				name="Iris Attendance"
-				active={activeItem === "home"}
+				active={activeItem === "Iris Attendance"}
 				onClick={handleItemClick}
 				as={Link}
 				to="/"
