@@ -6,8 +6,6 @@ import { Card, Image, Button } from "semantic-ui-react";
 import moment from "moment";
 
 const SectionCard = ({ section: { id, name, createdAt } }) => {
-	const sectionButtonClick = () => console.log("Hello");
-
 	return (
 		<Card fluid className="sectioncard">
 			<Card.Content>
@@ -16,12 +14,11 @@ const SectionCard = ({ section: { id, name, createdAt } }) => {
 					size="mini"
 					src="https://react.semantic-ui.com/images/avatar/large/molly.png"
 				/>
-				<Card.Header as={Link} to={`/sections/${id}`}>
+				<Card.Header as={Link} to={`/sections/${id}`} id={id}>
 					{name}
 				</Card.Header>
 				<Card.Meta>{moment(createdAt).fromNow(true)}</Card.Meta>
 				<Card.Description>Section</Card.Description>
-				<Button onClick={sectionButtonClick}>Hello</Button>
 			</Card.Content>
 		</Card>
 	);
