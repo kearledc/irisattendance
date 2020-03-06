@@ -30,4 +30,22 @@ const getSectionsQuery = gql`
 	}
 `;
 
-export { getStudentsQuery, getSectionsQuery };
+const getSectionQuery = gql`
+	query($id: String) {
+		getSection(sectionId: $id) {
+			id
+			name
+			createdAt
+			students {
+				firstName
+				lastName
+				absences
+				sectionName
+				id
+				createdAt
+			}
+		}
+	}
+`;
+
+export { getStudentsQuery, getSectionsQuery, getSectionQuery };

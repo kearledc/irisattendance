@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { graphql } from "react-apollo";
 // Semantic UI
 import { Card, Image, Button } from "semantic-ui-react";
 // moment
@@ -18,7 +19,6 @@ const SectionCard = ({ section: { id, name, createdAt } }) => {
 					{name}
 				</Card.Header>
 				<Card.Meta>{moment(createdAt).fromNow(true)}</Card.Meta>
-				<Card.Description>Section</Card.Description>
 			</Card.Content>
 		</Card>
 	);

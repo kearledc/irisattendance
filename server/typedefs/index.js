@@ -61,6 +61,6 @@ module.exports = gql`
 		dropStudent(studentId: String): Boolean
 
 		createSection(name: String): SectionType!
-		deleteSection(sectionId: ID): String!
+		deleteSection(sectionId: String): Boolean
 	}
 `;

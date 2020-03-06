@@ -6,6 +6,12 @@ const dropStudentMutation = gql`
 	}
 `;
 
+const deleteSection = gql`
+	mutation($id: String) {
+		deleteSection(sectionId: $id)
+	}
+`;
+
 const registerStudent = gql`
 	mutation registerStudent(
 		$firstName: String!
@@ -53,4 +59,10 @@ const logInAdmin = gql`
 	}
 `;
 
-export { dropStudentMutation, registerStudent, createSection, logInAdmin };
+export {
+	dropStudentMutation,
+	registerStudent,
+	createSection,
+	logInAdmin,
+	deleteSection
+};
