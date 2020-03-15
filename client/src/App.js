@@ -9,7 +9,7 @@ import RegisterStudent from "./Pages/RegisterStudent";
 import Login from "./Pages/Login";
 import SectionPage from "./Pages/SectionPage";
 import CreateSection from "./Pages/CreateSection";
-import SectionPage2 from "./Pages/SectionPage2";
+import AbsentTracker from "./Pages/AbsentTracker";
 
 // Components
 import MenuBar from "./Components/MenuBar";
@@ -28,7 +28,7 @@ function App() {
           <Route path="/createsection" component={CreateSection} />
           <AuthRoute exact path="/login" component={Login} />
           <Route exact path="/sections/:id" component={SectionPage} />
-          <Route exact path="/sectionspage2" component={SectionPage2} />
+          <Route exact path="/sections/update/:id" component={AbsentTracker} />
         </Container>
       </Router>
     </AuthProvider>

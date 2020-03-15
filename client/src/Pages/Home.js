@@ -17,7 +17,7 @@ const Home = () => {
 	const { admin } = useContext(AuthContext);
 
 	return (
-		<Grid columns={3} divided>
+		<Grid columns={4} divided>
 			<Grid.Row>
 				{admin && (
 					<h1 className="sectionList_Header">

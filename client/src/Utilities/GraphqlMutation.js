@@ -1,14 +1,9 @@
 import gql from "graphql-tag";
 
+//  Students
 const dropStudentMutation = gql`
 	mutation($id: String) {
 		dropStudent(studentId: $id)
-	}
-`;
-
-const deleteSection = gql`
-	mutation($id: String) {
-		deleteSection(sectionId: $id)
 	}
 `;
 
@@ -32,6 +27,38 @@ const registerStudent = gql`
 			id
 			createdAt
 		}
+	}
+`;
+
+const updateStudentMutation = gql`
+	mutation updateStudent(
+		$id: String
+		$firstName: String
+		$lastName: String
+		$absences: Int
+		$sectionName: String
+	) {
+		updateStudent(
+			updateStudent: {
+				firstName: $firstName
+				lastName: $lastName
+				sectionName: $sectionName
+				absences: $absences
+			}
+		) {
+			id
+			firstName
+			lastName
+			sectionName
+			absences
+		}
+	}
+`;
+
+// Sections
+const deleteSection = gql`
+	mutation($id: String) {
+		deleteSection(sectionId: $id)
 	}
 `;
 
@@ -62,7 +89,8 @@ const logInAdmin = gql`
 export {
 	dropStudentMutation,
 	registerStudent,
+	updateStudentMutation,
 	createSection,
-	logInAdmin,
-	deleteSection
+	deleteSection,
+	logInAdmin
 };

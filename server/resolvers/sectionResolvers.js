@@ -72,7 +72,9 @@ module.exports = {
 	SectionType: {
 		async students(_, args) {
 			try {
-				const student = await Student.find({ sectionName: _.name });
+				const student = await Student.find({
+					sectionName: _.name
+				}).sort({ lastName: 1 });
 				if (student) {
 					return student;
 				}

@@ -1,23 +1,39 @@
 import React, { useContext, useState } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { Link } from "react-router-dom";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 // GQL
 import { graphql } from "react-apollo";
-import { getSectionsQuery } from "../Utilities/GraphqlQueries";
+import { getSectionsQuery, getSectionQuery } from "../Utilities/GraphqlQueries";
 import { dropStudentMutation } from "../Utilities/GraphqlMutation";
 // Auth
 import { AuthContext } from "../Utilities/Auth";
 // Semantic UI
-import { Button } from "semantic-ui-react";
+import { Button, Icon, Label } from "semantic-ui-react";
 // Sweet Alert
 import Swal from "sweetalert2";
 // Lodash
 import { flowRight as compose } from "lodash";
+// useParams hook from React Router
+import { useParams } from "react-router-dom";
+// Pages
+import AbsentTracker from "./AbsentTracker";
 
 const SectionPage = props => {
-	const { admin } = useContext(AuthContext);
-	const { loading, data } = useQuery(getSectionsQuery);
+	const { id: sectionId } = useParams();
+	const [students, setStudents] = useState([]);
 	const [errs, setErrors] = useState({});
-	const sections = data ? data.getSections : [];
+	const { admin } = useContext(AuthContext);
+
+	const { loading } = useQuery(getSectionQuery, {
+		onCompleted({ getSection: { students } }) {
+			setStudents(students);
+		},
+		onError(err) {
+			setErrors(err);
+		},
+		variables: { id: sectionId }
+	});
+
 	const onClickDropStudent = e => {
 		let id = e.target.id;
 		Swal.fire({
@@ -41,13 +57,24 @@ const SectionPage = props => {
 		});
 	};
 
-	const studentList = sections.map(section => {
-		return section.students.map(student => {
+	const onClickAbsent = e => {
+		const id = e.target.id;
+		console.log(id);
+	};
+
+	const studentList =
+		students &&
+		students.map(student => {
 			return (
 				<tr key={student.id}>
-					<td>{student.firstName}</td>
 					<td>{student.lastName}</td>
-					<td>{student.absences}</td>
+					<td>{student.firstName}</td>
+					<td>
+						{student.absences}
+						<button onClick={onClickAbsent} id={student.id}>
+							+
+						</button>
+					</td>
 					<td>{student.sectionName}</td>
 					<td>
 						<Button
@@ -61,23 +88,24 @@ const SectionPage = props => {
 				</tr>
 			);
 		});
-	});
 
 	return (
 		<div className={loading ? "loading" : ""}>
 			{admin && (
-				<table className="table" id="studentTable">
-					<thead>
-						<tr>
-							<th>Last Name</th>
-							<th>First Name</th>
-							<th>Absences</th>
-							<th>Section</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody>{studentList}</tbody>
-				</table>
+				<div>
+					<table className="table" id="studentTable">
+						<thead>
+							<tr>
+								<th>Last Name</th>
+								<th>First Name</th>
+								<th>Absences</th>
+								<th>Section</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>{studentList}</tbody>
+					</table>
+				</div>
 			)}
 		</div>
 	);
